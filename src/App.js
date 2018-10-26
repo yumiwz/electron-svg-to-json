@@ -101,22 +101,24 @@ class App extends Component {
             }
           })
 
-          let finalFileName = filepath.substr(filepath.lastIndexOf('\\') + 1) + '.js'
-          this.setState({newFilePath: finalFileName})
+          const fileName = `${path.basename(filepath)}.js`
+
+          this.setState({ newFilePath: fileName })
           fs.readdir(f.path, 'utf-8', (err, data) => {
             if (err) {
               console.log('error', err)
             }
             
             this.readJsonFiles(data, f.path).then( (results) => {
+              console.log('fileName', fileName)
+              console.log('filepath', filepath)
 
               this.setState({
                 filePath: `${filepath}.js`,
-                fileName: finalFileName,
-                results: results
+                fileName,
+                results: results,
+                styles: 'transition'
               })
-      
-              this.setState({styles: "transition"})
             }, function (err) {
               console.log('error', err)
             })
@@ -241,6 +243,8 @@ class App extends Component {
       svgfolder: 'svgfolder-error',
       iconrow: 'icon-row-before'
     }
+
+    console.log('this.state', this.state)
     return (
       <div className="App">
           <Box 
