@@ -1,0 +1,81 @@
+.alertbox {
+  display: inline-block;
+  align-items: center;
+}
+
+.icon {
+  margin: 5rem 0 0 1rem;
+  /* position: relative; */
+  cursor: pointer;
+  height: 1.5rem;
+}
+
+.tooltipjs {
+  position: absolute;
+  font-size: 0.7rem;
+  margin: 1rem 0 0 0;
+  padding: 1rem 1rem;
+  background-color: white;
+  box-shadow: 0  0 25px -5px #C7C7C7;
+  border-radius: 5px;
+  /* display: none; */
+  max-width: 112px;
+  bottom: 33rem;
+}
+
+/* .icon:hover + .tooltipjs {
+  display: block;
+}  */
+
+/* .drag-button-target {
+  visibility: hidden;
+}
+
+.download-button-target {
+  visibility: hidden;
+}
+
+.next-button-target {
+  visibility: hidden;
+}
+
+.drag-button-target-after {
+  visibility: visible;
+  margin-right: 1rem;
+  transition: visibility 0s 300ms;
+}
+
+.download-button-target-after {
+  visibility: visible;
+  margin-right: 1rem;
+  transition: visibility 0s 300ms;
+}
+
+.next-button-target-after {
+  visibility: visible;
+  transition: visibility 0s 300ms;
+} */
+.info-icon {
+  bottom: 0;
+  height: 1.5rem;
+  margin-right: 0.7rem;;
+  margin-left: auto;
+  margin-bottom: 0.7rem;
+  display: inline-block;
+  display: block;
+  position: absolute;
+  right: 0;
+}
+
+#info-icon > .tooltipjs {
+  position: absolute;
+  font-size: 0.7rem;
+  padding: 1rem 1rem;
+  background-color: #66EE66;
+  box-shadow: 0  0 25px -5px #C7C7C7;
+  border-radius: 5px;
+  /* display: none; */
+  max-width: 112px;
+  bottom: 0.7rem;
+  right: 3rem;
+}
