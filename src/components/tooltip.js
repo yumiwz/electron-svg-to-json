@@ -1,17 +1,22 @@
 import React from 'react';
 import './tooltip.css';
+import dragImg from "../img/move.svg"
+import downloadImg from "../img/download.svg"
+import closeImg from "../img/cross.svg"
+import informationImg from "../img/information.svg"
+
 
 export default (props) => {
   
   function renderIcon () {
     if (props.type === "dragicon"){
-      return "/img/move.svg"
+      return dragImg
     } else if (props.type === "downloadicon"){
-      return "/img/download.svg"
+      return downloadImg
     } else if (props.type === "closeicon"){
-      return "/img/cross.svg"
+      return closeImg
     } else if (props.type === "information"){
-      return "/img/information.svg"
+      return informationImg
     }
   }
 

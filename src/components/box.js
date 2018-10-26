@@ -1,6 +1,8 @@
 import React from 'react'
 import './box.css'
 import Tooltip from './tooltip'
+import folderImg from '../img/folder.svg'
+import documentImg from '../img/document-new.svg'
 
 class Box extends React.Component {
   constructor(props) {
@@ -69,13 +71,16 @@ class Box extends React.Component {
         <p id="emptyfolder" className={this.props.styles.emptyfolder}>
           Empty folder!
         </p>
+        <p id="svgfolder" className={this.props.styles.svgfolder}>
+          Folder contains files other than svgs!
+        </p>
         <div 
           className={this.props.styles.dragbox} 
           onDragEnter={this.props.onDragBoxEnter} 
           onDragLeave={this.props.onDragBoxLeave}
           onDrop={this.props.onDrop} >
           <p>drag your folder here</p>
-          <img alt="dragicon" src="/img/folder.svg" id="folder-icon" draggable="false" />
+          <img alt="dragicon" src={folderImg} id="folder-icon" draggable="false" />
         </div>
         <div className={this.props.styles.iconrow}>
         {
@@ -102,7 +107,7 @@ class Box extends React.Component {
           <img 
             alt="dragicon" 
             className="file-svg" 
-            src="/img/document-new.svg" 
+            src={documentImg}
             onDragStart={event => this.props.onDrag(event)} 
           />
         </div>

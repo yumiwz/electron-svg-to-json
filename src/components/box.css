@@ -228,6 +228,20 @@ body {
   right: 0;
 }
 
+.svgfolder{
+  display: none;
+}
+
+.svgfolder-error {
+  color: red;
+  visibility: visible;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
 /* .drag-button-target {
   visibility: hidden;
 }

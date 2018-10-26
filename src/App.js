@@ -20,7 +20,8 @@ class App extends Component {
     counter: 0,
     error: {
       empty: false,
-      notAfolder: false
+      notAfolder: false,
+      notSvgfolder: false
     }
   }
 
@@ -35,7 +36,6 @@ class App extends Component {
   
   readJsonFiles = (filenames, filePath) => {
     fs.statSync(filePath)
-    console.log("++++", filenames)
       return Promise.all(filenames.map(this.getSvgFiles(filePath)));
   }
 
@@ -76,7 +76,10 @@ class App extends Component {
   }
 
     readDirectory = (f, filepath) => {
+      
     fs.readdir(f.path, (err, files) => {
+
+      console.log("files", files)
       if(err){
         console.log(err)
       } else {
@@ -85,6 +88,16 @@ class App extends Component {
             error: {
               empty: true,
               notAfolder: false
+            },
+            ondrag: false,
+          counter: 0
+          }))
+        } else if (!this.checkIsValidSvg(files)) {
+          this.setState(({
+            error: {
+              empty: false,
+              notAfolder: false,
+              notSvgfolder: true
             },
             ondrag: false,
           counter: 0
@@ -120,6 +133,10 @@ class App extends Component {
         }
       }
     })
+  }
+
+  checkIsValidSvg = files => {
+    return files.every(file => file.split('.').pop() === "svg")
   }
 
   writeFile = (filePath, result) => {
@@ -185,6 +202,7 @@ class App extends Component {
       dragfile: 'dragtarget',
       notafolder: 'notafolder',
       emptyfolder: 'emptyfolder',
+      svgfolder: 'svgfolder',
       iconrow: 'icon-row-before'
     }
     const transitionClasses = {
@@ -193,6 +211,7 @@ class App extends Component {
       dragfile: 'drag-button',
       notafolder: 'notafolder',
       emptyfolder: 'emptyfolder',
+      svgfolder: 'svgfolder',
       iconrow: 'icon-row'
     }
     const dragClass = {
@@ -201,6 +220,7 @@ class App extends Component {
       dragfile: 'dragtarget',
       notafolder: 'notafolder',
       emptyfolder: 'emptyfolder',
+      svgfolder: 'svgfolder',
       iconrow: 'icon-row-before'
     }
     const foldererrorClass = {
@@ -209,6 +229,7 @@ class App extends Component {
       dragfile: 'dragtarget',
       notafolder: 'notafolder-error',
       emptyfolder: 'emptyfolder',
+      svgfolder: 'svgfolder',
       iconrow: 'icon-row-before'
     }
     const emptyerrorClass = {
@@ -217,8 +238,17 @@ class App extends Component {
       dragfile: 'dragtarget',
       notafolder: 'notafolder',
       emptyfolder: 'emptyfolder-error',
+      svgfolder: 'svgfolder',
       iconrow: 'icon-row-before'
-
+    }
+    const svgerrorClass = {
+      dragbox: 'drag',
+      icons: 'icon-button',
+      dragfile: 'dragtarget',
+      notafolder: 'notafolder',
+      emptyfolder: 'emptyfolder',
+      svgfolder: 'svgfolder-error',
+      iconrow: 'icon-row-before'
     }
     return (
       <div className="App">
@@ -236,6 +266,7 @@ class App extends Component {
               : this.state.counter !== 0 ? dragClass
               : this.state.error.notAfolder ? foldererrorClass
               : this.state.error.empty ? emptyerrorClass
+              : this.state.error.notSvgfolder ? svgerrorClass
               : initialClasses} 
             />
       </div>
