@@ -35,8 +35,9 @@ class App extends Component {
   }
   
   readJsonFiles = (filenames, filePath) => {
+    let filterSvg = this.filterSvg(filenames)
     fs.statSync(filePath)
-      return Promise.all(filenames.map(this.getSvgFiles(filePath)));
+      return Promise.all(filterSvg.map(this.getSvgFiles(filePath)));
   }
 
   onWriteToFileSystem = (e) => {
@@ -92,16 +93,6 @@ class App extends Component {
             ondrag: false,
           counter: 0
           }))
-        } else if (!this.checkIsValidSvg(files)) {
-          this.setState(({
-            error: {
-              empty: false,
-              notAfolder: false,
-              notSvgfolder: true
-            },
-            ondrag: false,
-          counter: 0
-          }))
         } else {
           this.setState({
             error: {
@@ -135,8 +126,8 @@ class App extends Component {
     })
   }
 
-  checkIsValidSvg = files => {
-    return files.every(file => file.split('.').pop() === "svg")
+  filterSvg = files => {
+    return files.filter(file => file.split('.').pop() === "svg")
   }
 
   writeFile = (filePath, result) => {

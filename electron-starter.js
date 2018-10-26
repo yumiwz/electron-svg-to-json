@@ -8,6 +8,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path');
 const url = require('url');
 const  {download}  = require('electron-dl');
+// const closeImg = require("src/img/cross.svg")
 
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -72,7 +73,7 @@ ipcMain.on('ondragstartfile', (event, filePath) => {
 
     event.sender.startDrag({
     file: filePath,
-    icon: "file.svg"
+    icon: "/src/img/next.png"
     })
 })
 
