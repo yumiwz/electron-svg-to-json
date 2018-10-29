@@ -72,7 +72,7 @@ class Box extends React.Component {
           Empty folder!
         </p>
         <p id="svgfolder" className={this.props.styles.svgfolder}>
-          Folder contains files other than svgs!
+          Folder contains no svgs!
         </p>
         <div 
           className={this.props.styles.dragbox} 

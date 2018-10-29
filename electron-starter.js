@@ -73,7 +73,7 @@ ipcMain.on('ondragstartfile', (event, filePath) => {
 
     event.sender.startDrag({
     file: filePath,
-    icon: "./src/img/next.png"
+    icon: "./src/img/file.png"
     })
 })
 

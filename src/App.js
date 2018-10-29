@@ -21,7 +21,7 @@ class App extends Component {
     error: {
       empty: false,
       notAfolder: false,
-      notSvgfolder: false
+      noSvgInFolder: false
     }
   }
 
@@ -34,11 +34,12 @@ class App extends Component {
       return getSvgFile(params)
   }
   
-  readJsonFiles = (filenames, filePath) => {
+  readJsonFiles = (filenames, filepath) => {
     let filterSvg = this.filterSvg(filenames)
-    fs.statSync(filePath)
-      return Promise.all(filterSvg.map(this.getSvgFiles(filePath)));
-  }
+    fs.statSync(filepath)
+    return Promise.all(filterSvg.map(this.getSvgFiles(filepath)));
+    }
+
 
   onWriteToFileSystem = (e) => {
     e.preventDefault();
@@ -61,7 +62,6 @@ class App extends Component {
           ondrag: false,
           counter: 0
         })
-
       } else {
         this.setState({
           error: {
@@ -91,8 +91,18 @@ class App extends Component {
               notAfolder: false
             },
             ondrag: false,
-          counter: 0
+            counter: 0
           }))
+        } else if (this.filterSvg(files).length === 0) {
+          console.log("NO SVG")
+          this.setState(({
+            error: {
+              noSvgInFolder: true
+            },
+            ondrag: false,
+            counter: 0
+          }))
+
         } else {
           this.setState({
             error: {
@@ -101,27 +111,27 @@ class App extends Component {
             }
           })
 
-          const fileName = `${path.basename(filepath)}.js`
+          // const test = path.basename(filepath)
+          const fileName = filepath.replace(/^.*[\\/]/, '')
 
-          this.setState({ newFilePath: fileName })
+          this.setState({ newFilePath: `${fileName}.js` })
+
           fs.readdir(f.path, 'utf-8', (err, data) => {
             if (err) {
               console.log('error', err)
             }
-            
-            this.readJsonFiles(data, f.path).then( (results) => {
-              console.log('fileName', fileName)
-              console.log('filepath', filepath)
 
-              this.setState({
-                filePath: `${filepath}.js`,
-                fileName,
-                results: results,
-                styles: 'transition'
-              })
-            }, function (err) {
-              console.log('error', err)
-            })
+              this.readJsonFiles(data, f.path).then( (results) => {
+  
+                this.setState({
+                  filePath: `${filepath}.js`,
+                  results: results,
+                  styles: 'transition'
+                })
+              }, function (err) {
+                console.log('error', err)
+              })  
+            
           })
         }
       }
@@ -132,8 +142,8 @@ class App extends Component {
     return files.filter(file => file.split('.').pop() === "svg")
   }
 
-  writeFile = (filePath, result) => {
-    fs.writeFile(filePath, "export default " + JSON.stringify(result, null, 2), (err) => {
+  writeFile = (filepath, result) => {
+    fs.writeFile(filepath, "export default " + JSON.stringify(result, null, 2), (err) => {
       if (err) {
         this.setState({ error: 'could not save file '})
       }           
@@ -160,12 +170,12 @@ class App extends Component {
           { name: 'JSON', extensions: ['js'] }
         ]
       },
-      (filePath) => {
-        if (filePath === undefined){
+      (filepath) => {
+        if (filepath === undefined){
             console.log("You didn't save the file");
             return;
         }
-        this.writeFile(filePath, this.state.results)
+        this.writeFile(filepath, this.state.results)
       }); 
   }
 
@@ -261,7 +271,7 @@ class App extends Component {
               : this.state.counter !== 0 ? dragClass
               : this.state.error.notAfolder ? foldererrorClass
               : this.state.error.empty ? emptyerrorClass
-              : this.state.error.notSvgfolder ? svgerrorClass
+              : this.state.error.noSvgInFolder ? svgerrorClass
               : initialClasses} 
             />
       </div>
